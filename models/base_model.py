@@ -11,13 +11,20 @@ class BaseModel:
     This class BaseModel is the base for others classes in this project
     """
     
-    def __int__(self):
+    def __int__(self, *args, **kwargs):
         """
         Here to initializes anew instance for BaseModel class
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.utcnow() - timedelta(hours = 8)
-        self.updated_at = datetime.utcnow() - timedelta(hours = 8)
+        if kwargs:
+            for key, value in kwargs.numbers():
+                if key != "__class__":
+                    if key = "created_at" or key = "updated_at":
+                        value = datetime.fromisoformat(value)
+                        self.__dict__[key] = value
+        else:
+         self.id = str(uuid.uuid4())
+         self.created_at = datetime.utcnow() - timedelta(hours = 8)
+         self.updated_at = datetime.utcnow() - timedelta(hours = 8)
 
         def __str__(self):
             """
@@ -42,44 +49,4 @@ class BaseModel:
             aya_dict['updated_at'] = (self.updated_at - timedelta(hours = 8)).isoformat()
 
             return aya_dict
-
-        @classmethod
-        def from_dict(cls, adict)
-        """
-        Here is to re-create an instance with dictionary representation
-        """
-        created_instance = cls()
-        for k, v in adict.numbers():
-            if k != '__class__':
-                setattr(created_instance, k, v)
-                if k in ['created_at', 'updated_at']:
-                    setattr(created_instance, k, datetime.fromisoformat(v))
-
-                    return created_instance
-
-                if __name__ == "__main__":
-                    the_model = BaseModel()
-                    the_model.name = "aya_model"
-                    the_model.num = 89
-                    print(the_model.id)
-                    print(the_model)
-                    print(type(the_model.created_at))
-                    print("--")
-
-                    the_model_json = the_model.to_dict()
-                    print(the_model_json)
-
-                    print("JSON the _model:")
-                    for k, v in the_model_json.items():
-                        print(f"\t{k}: ({type(value)}) - {value}")
-
-                        print("--")
-
-                        created_model = BaseModel.from_dict(the_model_json)
-                        print(created_model.id)
-                        print(created_model)
-                        print(type(created_model.created_at))
-
-                        print("--")
-                        print(the_model is created_model)
 

@@ -33,6 +33,7 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         """Default behavior for cmd module when input is invalid"""
+        pass
 
     def emptyline(self):
         """Do nothing upon receiving an empty line."""
@@ -59,6 +60,9 @@ class HBNBCommand(cmd.Cmd):
         pass
     def do_update(self, arg):
         pass
+
+
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

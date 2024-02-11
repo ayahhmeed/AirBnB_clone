@@ -3,17 +3,22 @@
 This is the unit tests for the class BaseModel
 """
 
+import os
+import sys
 import unittest
-import models
-from datetime import datetime
-from models.base_model import BaseModel
+from datetime import datetime, timezone
+from base_model import BaseModel
 
-class TestBaseModel(unittest.TestCase)
-"""
-Here is test cases for the BaseModel class
-"""
+sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '..', 'models')))
 
-def the_test_initialization(self):
+
+class TestBaseModel(unittest.TestCase):
+    """
+    Here is test cases for the BaseModel class
+    """
+
+
+def test_initialization(self):
     """
     Here to test the initialization of BaseModel class
     """
@@ -27,7 +32,8 @@ def the_test_initialization(self):
         Here to test the string representaion of BaseModel intance
         """
         the_model = BaseModel()
-        self.assertEqual(str(the_model), "[BaseModel] ({}) {}".format(the_model.id, the_model.__dict__))
+        self.assertEqual(str(the_model), "[BaseModel] ({}) {}".format(
+            the_model.id, the_model.__dict__))
 
         def save_test(self):
             """
@@ -52,5 +58,5 @@ def the_test_initialization(self):
                 self.assertIsInstance(the_model_json['created_at'], str)
                 self.assertIsInstance(the_model_json['updated_at'], str)
 
-                if __name__ == "__main__":
-                    unittest.main()
+    if __name__ == "__main__":
+        unittest.main()

@@ -5,15 +5,16 @@ Defines the HBnB console.
 """
 
 import cmd
-from models import storage
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.place import Place
-from models.amenity import Amenity
-from models.review import Review
+# from models import storage
+# from models.base_model import BaseModel
+# from models.user import User
+# from models.state import State
+# from models.city import City
+# from models.place import Place
+# from models.amenity import Amenity
+# from models.review import Review
 
+# print(dir(cmd.Cmd))
 class HBNBCommand(cmd.Cmd):
 
     """
@@ -62,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
 
-
+HBNBCommand().cmdloop()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

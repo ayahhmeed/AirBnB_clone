@@ -59,5 +59,27 @@ def test_initialization(self):
                 self.assertIsInstance(the_model_json['created_at'], str)
                 self.assertIsInstance(the_model_json['updated_at'], str)
 
+                new_model = BaseModel(**the_model_json)
+                self.assertEqual(the_model.id, new_model.id)
+                self.assertEqual(the_model.created_at, new_model.created_at)
+                self.assertEqual(the_model.updated_at, new_model.updated_at)
+
+            def test_save_and_reload(self):
+                the_model = BaseModel()
+                the_model.name = "The_Model"
+                the_model.my_number = 123
+                the_model.save()
+
+                reloaded_model = BaseModel.find(the_model.id)
+                self.assertEqual(reloaded_model.id, the_model.id)
+                self.assertEqual(
+                        reloaded_model.created_at,
+                        the_model.created_at)
+                self.assertEqual(
+                        reloaded_model.updated_at,
+                        the_model.updated_at)
+                self.assertEqual(reloaded_model.name, the_model.name)
+                self.assertEqual(reloaded_model.my_number, the_model.my_number)
+
     if __name__ == "__main__":
         unittest.main()

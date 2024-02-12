@@ -36,7 +36,7 @@ def test_initialization(self):
         self.assertEqual(str(the_model), "[BaseModel] ({}) {}".format(
             the_model.id, the_model.__dict__))
 
-        def save_test(self):
+        def test_savet(self):
             """
             Here to test the save method of BaseModel instance
             """
@@ -45,7 +45,7 @@ def test_initialization(self):
             the_model.save()
             self.assertNotEqual(the_old_updated, the_model.updated.updated_at)
 
-            def dict_test(self):
+            def test_dict(self):
                 """
                 Here is the test of to_dict method of BaseModel
                 """

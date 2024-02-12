@@ -3,13 +3,14 @@
 This is the unit tests for the class BaseModel
 """
 
-import os
-import sys
 import unittest
+import sys
+import os
 from datetime import datetime, timezone
-from base_model import BaseModel
-
-sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '..', 'models')))
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(os.path.dirname(current_dir))
+sys.path.append(root_dir)
+from models.base_model import BaseModel
 
 
 class TestBaseModel(unittest.TestCase):

@@ -7,90 +7,65 @@ import unittest
 import os
 import sys
 
+from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
+
 parent_dir = os.path.abspath(os.path.dirname(__file__))
 parent_parent_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
 sys.path.append(parent_parent_dir)
 
-from models.engine.file_storage import FileStorage
-from models.base_model import BaseModel
-
 
 class TestFileStorage(unittest.TestCase):
+
     def setUp(self):
         """
         Here to set up a test for the FileStorage
         """
-        self.storage = FileStorage
+        self.storage = FileStorage()
+        self.base_model = BaseModel()
+        self.base_model.name = "My_First_Model"
+        self.base_model.my_number = 89
 
-    def tearDown(self):
+    def test_save_model(self):
         """
         Here to clean all the created files
         """
-        if os.path.exists(self.storage._FileStorage__file_path):
-            os.remove(self.storage._FileStorage__file_path)
+        self.base_model.save()
+        self.assertIsNotNone(self.base_model.id)
+        self.assertIsNotNone(self.base_model.created_at)
+        self.assertIsNotNone(self.base_model.updated_at)
 
-    def test_all(self):
+    def test_get_model(self):
         """
         Here to test all the method included
         """
-        objects = self.storage.all()
-        self.assertEqual(len(objects), 0)
+        self.base_model.save()
+        base_model_from_storage = self.storage.get(
+                BaseModel, self.base_model.id)
+        self.assertEqual(base_model_from_storage.name, "My_First_Model")
+        self.assertEqual(base_model_from_storage.my_number, 89)
 
-        wmodel = BaseModel()
-        wmodel.save()
-
-        objects = self.storage.all()
-        self.assertEqual(len(objects), 1)
-        self.assertIn("BaseModel." + wmodel.id, objects)
-
-    def test_new(self):
+    def test_get_all_models(self):
         """
         Here for testing new methods
         """
-        wmodel = BaseModel()
+        self.base_model.save()
+        base_models_from_storage = self.storage.all(BaseModel)
+        self.assertIsNotNone(base_models_from_storage)
+        self.assertEqual(len(base_models_from_storage), 1)
+        self.assertEqual(base_models_from_storage[0].name, "My_First_Model")
+        self.assertEqual(base_models_from_storage[0].my_number, 89)
 
-        self.storage.new(wmodel)
-
-        self.asserIn("BaseModel." + wmodel.id, self.storage._FileStorage__objects)
-
-    def test_save_reload(self):
+    def test_delete_model(self):
         """
         Here to test the save and reload methods
         """
-        wmodel = BaseModel()
-        wmodel.save()
-        self.storage.save()
-        new_storage = FileStorage()
-        new_storage.reload()
-        objects = new_storage.all()
-        self.assertEqual(len(objects), 1)
-        self.assertIn("BaseModel." + wmodel.id, objects)
-
-    def test_save(self):
-        """
-        Here to test the save method
-        """
-        wmodel = BaseModel()
-        wmodel.save()
-
-        self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
-
-    def test_reload(self):
-        """
-        Here testing for reload method
-        """
-        wmodel = BaseModel()
-        wmodel.save()
-        self.storage.save()
-        self.storage.reload()
-        objects = self.storage.all()
-        self.assertEqual(len(objects), 1)
-        self.assertIn("BaseModel." + wmodel.id, objects)
+        self.base_model.save()
+        self.storage.delete(self.base_model)
+        base_model_from_storage = self.storage.get(
+                BaseModel, self.base_model.id)
+        self.assertIsNone(base_model_from_storage)
 
 
 if __name__ == "__main__":
     unittest.main()
-
-
-
-

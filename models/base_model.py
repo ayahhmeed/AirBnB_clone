@@ -3,8 +3,18 @@
 This Module conatining the BaseModel class and its attributes
 """
 
+import os
+import sys
 import uuid
 from datetime import datetime, timedelta
+
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, parent_dir)
+
+from models.engine import file_storage
+
+storage = file_storage.FileStorage()
+storage.reload()
 
 
 class BaseModel:
@@ -27,6 +37,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow() - timedelta(hours=8)
             self.updated_at = datetime.utcnow() - timedelta(hours=8)
+            file_storage.FileStorage().new(self)
 
     def __str__(self):
         """
@@ -40,6 +51,7 @@ class BaseModel:
         """
         self.updated_at = datetime.utcnow() - timedelta(hours=8)
         waad = self.to_dict()
+        file_storage.FileStorage().save()
 
     def to_dict(self):
         """

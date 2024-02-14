@@ -7,6 +7,7 @@ Defines the HBnB console.
 import cmd
 import argparse
 from codeop import CommandCompiler
+import linecache
 import re
 # import sys
 from models import storage
@@ -64,7 +65,11 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Create a new class instance and print its id."""
-        pass
+        args = linecache.split(" ")
+        com = eval(args[0])()
+        com.save()
+
+        print(com.id)
         
 
     def do_show(self, arg):
@@ -82,7 +87,17 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print(storage.all()[key])
     def do_destroy(self, arg):
-        pass
+        comm = arg.split()
+        if not comm or len(comm) != 2 or comm[0] != "id":
+            print("destroy id")
+            return
+        try:
+            obj = int(comm[1])
+        except ValueError:
+            print("invalid id")
+            return
+        del object(obj)
+
     def do_all(self, arg):
         pass
     def do_count(self, arg):

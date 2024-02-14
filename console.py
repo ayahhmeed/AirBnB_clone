@@ -5,16 +5,30 @@ Defines the HBnB console.
 """
 
 import cmd
-# from models import storage
-# from models.base_model import BaseModel
+import argparse
+from codeop import CommandCompiler
+import linecache
+import re
+# import sys
+from models import storage
+from models.base_model import BaseModel
 # from models.user import User
-# from models.state import State
-# from models.city import City
-# from models.place import Place
-# from models.amenity import Amenity
-# from models.review import Review
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
-# print(dir(cmd.Cmd))
+
+def parse (arg: str) -> list:
+    # parser = argparse.ArgumentParser(description='Process commands.')
+    # parser.add_argument('command')
+    # arguments = parser.parse_args()
+    # print(arguments)
+   paresed = re.split(r"[ .(),]", arg)
+   return paresed
+
+
 class HBNBCommand(cmd.Cmd):
 
     """
@@ -50,11 +64,40 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, arg):
-        pass
+        """Create a new class instance and print its id."""
+        args = linecache.split(" ")
+        com = eval(args[0])()
+        com.save()
+
+        print(com.id)
+        
+
     def do_show(self, arg):
-        pass
+        commands = parse(arg)
+        if arg == "":
+            print("** class name missing **")
+        elif commands[0] not in HBNBCommand.CLASSNAMES:
+            print("** class doesn't exist **")
+        elif len(commands) < 2:
+            print("** instance id missing **")
+        else:
+            key = "{}.{}".format(commands[0], commands[1])
+            if key not in storage.all():
+                print("** no instance found **")
+            else:
+                print(storage.all()[key])
     def do_destroy(self, arg):
-        pass
+        comm = arg.split()
+        if not comm or len(comm) != 2 or comm[0] != "id":
+            print("destroy id")
+            return
+        try:
+            obj = int(comm[1])
+        except ValueError:
+            print("invalid id")
+            return
+        del object(obj)
+
     def do_all(self, arg):
         pass
     def do_count(self, arg):

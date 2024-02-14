@@ -53,6 +53,7 @@ class FileStorage:
         from models.city import City
         from models.amenity import Amenity
         from models.review import Review
+        from models.base_model import BaseModel
 
         if path(self.__file_path).exists():
             with open(self.__file_path, "r", encoding="utf-8") as f:

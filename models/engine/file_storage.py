@@ -4,16 +4,20 @@ Here this module to create FileStorage
 that contain serilization and deserilization
 """
 
+
 import json
-from os.path import exists
+from pathlib import Path
 
 
 class FileStorage:
-    """
-    This class to serialize instances to a json file and to deserialize
-    """
-    __file_path = "file.json"
-    __objects = {}
+
+    def __init__(self):
+        """
+        Here to initialize the User class
+        """
+        self.__file_path = "users.json"
+        self.__objects = {}
+        self.reload()
 
     def all(self):
         """
@@ -43,9 +47,12 @@ class FileStorage:
         """
         Here to deserialize json to the file
         """
-        if exists(self.__file_path):
+        from models.user import User
+        if path(self.__file_path).exists():
             with open(self.__file_path, "r", encoding="utf-8") as f:
                 json_objects = json.load(f)
 
                 for key, obj_dict in json_objects.items():
-                    self.__objects[key] = BaseModel(**obj_dict)
+                    class_name, obj_id = key.split('.')
+                    if class_name == 'User':
+                        self.__objects[key] = User(**obj_dict)

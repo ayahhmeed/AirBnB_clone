@@ -3,9 +3,8 @@
 This the user class that containd its information
 """
 
-from models.base_model import BaseModel
 
-class User(BaseModel):
+class User:
     """
     This the user class that inherits from BaseModel
     """
@@ -14,6 +13,9 @@ class User(BaseModel):
         """
         class initialize the user instances
         """
+        from models.base_model import BaseModel
+        self.base_model_instance = BaseModel()
+
         self.first_name = ""
         self.last_name = ""
         self.email = ""
@@ -21,6 +23,3 @@ class User(BaseModel):
         self.id = None
         self.created_at = None
         self.updated_at = None
-
-
-

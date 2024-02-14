@@ -48,6 +48,12 @@ class FileStorage:
         Here to deserialize json to the file
         """
         from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
+
         if path(self.__file_path).exists():
             with open(self.__file_path, "r", encoding="utf-8") as f:
                 json_objects = json.load(f)
@@ -56,3 +62,14 @@ class FileStorage:
                     class_name, obj_id = key.split('.')
                     if class_name == 'User':
                         self.__objects[key] = User(**obj_dict)
+                    for key, obj_dict in json_objects.items():
+                        if obj_dict["__class__"] == "Place":
+                            self.__objects[key] = Place(**obj_dict)
+                        elif obj_dict["__class__"] == "State":
+                            self.__objects[key] = State(**obj_dict)
+                        elif obj_dict["__class__"] == "City":
+                            self.__objects[key] = City(**obj_dict)
+                        elif obj_dict["__class__"] == "Amenity":
+                            self.__objects[key] = Amenity(**obj_dict)
+                        elif obj_dict["__class__"] == "Review":
+                            self.__objects[key] = Review(**obj_dict)

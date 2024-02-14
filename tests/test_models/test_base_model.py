@@ -34,14 +34,14 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(str(the_model), "[BaseModel] ({}) {}".format(
             the_model.id, the_model.__dict__))
 
-    def test_savet(self):
+    def test_save(self):
         """
         Here to test the save method of BaseModel instance
         """
         the_model = BaseModel()
         the_old_updated = the_model.updated_at
         the_model.save()
-        self.assertNotEqual(the_old_updated, the_model.updated.updated_at)
+        self.assertNotEqual(the_old_updated, the_model.updated_at)
 
     def test_dict(self):
         """

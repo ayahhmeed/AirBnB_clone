@@ -65,45 +65,40 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Create a new class instance and print its id."""
-        args = linecache.split(" ")
-        com = eval(args[0])()
-        com.save()
+        args = arg.split()
+        if not args:
+            print("**the class name missing**")
+            return
 
-        print(com.id)
+        class_name = args[0]
+        if class_name not in HBNBCommand.__classes:
+            print("**the class does not exist**")
+            return
+        new_obj = eval("{}()".format(class_name))
+        new_obj.save()
+        print(new_obj.id)
         
 
     def do_show(self, arg):
-        commands = parse(arg)
-        if arg == "":
-            print("** class name missing **")
-        elif commands[0] not in HBNBCommand.CLASSNAMES:
-            print("** class doesn't exist **")
-        elif len(commands) < 2:
-            print("** instance id missing **")
+        """show instance based on class name and id"""
+        args = arg.split()
+        if not args:
+            print("**class name is missing**")
+            return
+        class_name = args[0]
+        if class_name not in HBNBCommand.__classes:
+            print("**class doesnot exist**")
+            return
+        if len (args) < 2:
+            print("**instance id is missing**")
+            return
+        obj.id = args[1]
+        key = "{}.{}".format(class_name, obj_id)
+        obj = storage.all().get(key)
+        if obj is None:
+            print("**no instance found**")
         else:
-            key = "{}.{}".format(commands[0], commands[1])
-            if key not in storage.all():
-                print("** no instance found **")
-            else:
-                print(storage.all()[key])
-    def do_destroy(self, arg):
-        comm = arg.split()
-        if not comm or len(comm) != 2 or comm[0] != "id":
-            print("destroy id")
-            return
-        try:
-            obj = int(comm[1])
-        except ValueError:
-            print("invalid id")
-            return
-        del object(obj)
-
-    def do_all(self, arg):
-        pass
-    def do_count(self, arg):
-        pass
-    def do_update(self, arg):
-        pass
+            print(obj)
 
 
 HBNBCommand().cmdloop()

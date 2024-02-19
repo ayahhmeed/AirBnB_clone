@@ -1,0 +1,62 @@
+.places {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.place {
+    flex: 1 1 45%; /* Adjust as needed */
+    margin: 10px;
+}
+
+.amenities {
+    margin-top: 20px;
+}
+
+.amenities h2 {
+    font-size: 1.5em; /* Increased font size for better readability */
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.amenities ul {
+    list-style: none;
+}
+
+.reviews {
+    margin-top: 20px;
+}
+
+.reviews h2 {
+    font-size: 1.5em; /* Increased font size for better readability */
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.reviews ul {
+    list-style: none;
+}
+
+.icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-image: url('../images/icon.png'); /* Replace 'icon.png' with your actual icon */
+    background-size: cover;
+}
+
+.pet-friendly {
+    background-position: 0 0; /* Adjust according to your sprite */
+}
+
+.tv {
+    background-position: -25px 0; /* Adjust according to your sprite */
+}
+
+.wifi {
+    background-position: -50px 0; /* Adjust according to your sprite */
+}
+
+@media (max-width: 768px) {
+    .place {
+        flex-basis: 100%;
+    }
+}
